@@ -41,3 +41,17 @@ __pycache__
 *copy*
 syllabus_graph.png
 syllabus_graph.png.pdf
+book/01/*
+book/02/*
+book/03/*
+book/04/*
+book/05/*
+book/example/料理職人になろう/week1/*
+book/example/料理職人になろう/week2/*
+book/example/料理職人になろう/week3/*
+book/example/料理職人になろう/week4/*
+book/example/料理職人になろう/week5/*
+book/example/武士になる方法/*
+syllabus_en.yaml
+syllabus_graph_en.png
+create_folder_structure.ipynb

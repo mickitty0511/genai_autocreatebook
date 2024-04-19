@@ -32,10 +32,10 @@ Lecture Generatorは、講義シリーズの資料を自動生成する便利な
    ```
    python 2_syllabus_to_book.py
    ```
-   このスクリプトは、`data/syllabus.yaml`に保存されたシラバスを読み込み、それをもとに書籍の各章や節を生成します。生成された書籍の内容は`output/`ディレクトリ内に保存されます。
+   このスクリプトは、`data/syllabus.yaml`に保存されたシラバスを読み込み、それをもとに書籍の各章や節を生成します。生成された書籍の内容は`data/`ディレクトリ内に保存されます。
 
 
-4. 生成された資料は `output/` ディレクトリ内の対応する週のサブディレクトリに保存されます。
+4. 生成された資料は `data/` ディレクトリ内の対応する週のサブディレクトリに保存されます。
 
 ## 要件定義書の変更について
 
@@ -48,72 +48,85 @@ Lecture Generatorは、講義シリーズの資料を自動生成する便利な
 うまく動作しない場合は `ais`内の該当ファイルを修正してください。
 
 
+## 主要ファイルについて
+- 1_transcript_to_syllabus.py
+   - YAML形式のシラバスを作成するスクリプトを自動生成するスクリプト
+- 2_syllabus_to_book.py
+   - 書籍を作成するスクリプトを自動生成するスクリプト
+- generate_book.py
+   - 書籍を作成するスクリプト
+- generate_syllabus_graph.py
+   - シラバスをグラフ化してpngファイルとして保存するスクリプト
+- syllabus_graph.png
+   - シラバスをグラフ化した写真ファイル
+- transcript.txt
+   - 講義のシラバスとして作成したい内容をまとめたテキスト
+- book/week_*/*md
+   - 各週の講義資料
+- data/syllabus.yaml
+   - 講義のシラバス
+- llms/claude.txt
+   - スクリプト自動生成のプロンプトテンプレ
 
-## フォルダ構成（古いので書き換えます）
 
+## フォルダ構成
 ```
 lecture_generator/
+
 .
-├── README.md
+├── AIdocs
+│   └── 書籍生成AI.md
+├── ais
+│   └── lecture_generator.md
+│   └── quiz_generator.md
+├── book
+│   ├── week_1
+│   │   └── Pythonの基本文法.md
+│   │   └── プログラミングの基本概念.md
+│   ├── week_2
+│   │   └── Pythonのデータ構造.md
+│   │   └── アルゴリズムの基礎.md
+│   ├── week_3
+│   │   └── Webフレームワーク.md
+│   │   └── データ分析ライブラリ.md
+│   │   └── 機械学習ライブラリ.md
+│   ├── week_4
+│   │   └── customer_data.csv
+│   │   └── product_prices.csv
+│   │   └── sales_data.csv
+│   │   └── Webアプリ開発.md
+│   │   └── コード共有とレビュー.md
+│   │   └── データ分析プロジェクト.md
+│   ├── week_5
+│   │   └── キャリアプラン.md
+│   │   └── チーム開発.md
+│   │   └── テストとコードレビュー.md
+│   │   └── ドキュメンテーション.md
 ├── data
-│   ├──  syllabus.yaml
 │   ├── __pycache__
 │   │   └── master_syllabus.cpython-311.pyc
-│   └── master_syllabus.py
-├── images
-│   ├── course_overview
-│   └── course_overview.pdf
-├── main.py
-├── output
-│   ├── week1
-│   │   ├── lecture1.md
-│   │   ├── lecture2.md
-│   │   ├── lecture3.md
-│   │   ├── lecture4.md
-│   │   ├── lecture5.md
-│   │   ├── lecture6.md
-│   │   ├── lecture7.md
-│   │   ├── quiz1.md
-│   │   ├── quiz2.md
-│   │   ├── quiz3.md
-│   │   ├── quiz4.md
-│   │   ├── quiz5.md
-│   │   ├── quiz6.md
-│   │   ├── quiz7.md
-│   │   └── syllabus.md
-│   ├── week2
-│   │   ├── lecture1.md
-│   │   ├── lecture2.md
-│   │   ├── lecture3.md
-│   │   ├── lecture4.md
-│   │   ├── lecture5.md
-│   │   ├── lecture6.md
-│   │   ├── lecture7.md
-│   │   ├── quiz1.md
-│   │   ├── quiz2.md
-│   │   ├── quiz3.md
-│   │   ├── quiz4.md
-│   │   ├── quiz5.md
-│   │   ├── quiz6.md
-│   │   ├── quiz7.md
-│   │   └── syllabus.md
-├── references
-│   ├── cursor.md
-│   ├── openinterpreter.md
-│   └── promptprogramming.md
+│   └── syllabus.yaml
+├── llms
+│   └── claude.txt
 ├── templates
-│   ├── lecture_template.md
+│   └── lecture_template.md
 │   └── weekly_syllabus_template.md
-└── utils
-    ├── __pycache__
-    │   └── generator.cpython-311.pyc
-    └── generator.py
+├── utils
+│   ├── __pycache__
+│   │   └── generator.cpython-311.pyc
+└── .gitignore
+└── 1_transcript_to_syllabus.py
+└── 2_syllabus_to_book.py
+└── generate_book.py
+└── generate_syllabus_graph.py
+└── README.md
+└── syllabus_graph
+└── syllabus_graph.png
+└── transcript.txt
 
-19 directories, 92 files
 
 ```
 
 ## ライセンス
 
 このプロジェクトは [MIT ライセンス](LICENSE) の下で公開されています。
-

@@ -16,7 +16,7 @@ def generate_book():
     with open("AIdocs/書籍生成AI.md", "r", encoding="utf-8", errors="ignore") as f:
         book_prompt = f.read()
 
-    with open("syllabus.yaml", "r", encoding="utf-8", errors="ignore") as f:
+    with open("data/syllabus.yaml", "r", encoding="utf-8", errors="ignore") as f:
         syllabus = f.read()
 
     with open("llms/claude.txt", "r", encoding="utf-8", errors="ignore") as f:

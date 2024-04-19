@@ -76,7 +76,7 @@ def generate_syllabus_graph():
     """
     client = anthropic.Anthropic(api_key=anthropic.api_key)
 
-    with open("./syllabus.yaml", "r") as file:
+    with open("./data/syllabus.yaml", "r") as file:
         syllabus = file.read()
 
     prompt = f"""
@@ -197,4 +197,4 @@ for step in tqdm(steps):
     time.sleep(0.5)
 
 print("✏️ シラバスの内容は syllabus.yaml を書き換えることで、ご自身の求めている形に変更できます。")
-print("📜 syllabus.yamlのリンク: ./syllabus.yaml")
+print("📜 syllabus.yamlのリンク: ./data/syllabus.yaml")
