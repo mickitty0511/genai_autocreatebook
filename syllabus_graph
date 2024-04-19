@@ -1,60 +1,80 @@
 // Syllabus Graph
 digraph {
+	graph [newrank=true rankdir=TB splines=ortho]
 	"Month 1
-武士の歴史と心構え" [fillcolor=lightblue shape=box style=filled]
-	"Month 1
-武士の歴史と心構え" -> lectures_month_1 [headport=nw style=dashed tailport=s]
+プログラミングの基礎, Pythonの文法" [fillcolor=lightblue fontname="MS UI Gothic" shape=box style=filled width=2.625]
 	subgraph cluster_month_1 {
-		lectures_month_1 [label="武士の起源と発展
-武士道の基本理念" shape=box]
-	}
-	"Month 2
-武芸の基礎" [fillcolor=lightblue shape=box style=filled]
-	"Month 2
-武芸の基礎" -> lectures_month_2 [headport=nw style=dashed tailport=s]
-	subgraph cluster_month_2 {
-		lectures_month_2 [label="剣術の基本
-弓術の基本
-馬術の基本
-武芸の心法" shape=box]
-	}
-	"Month 3
-兵法と戦略" [fillcolor=lightblue shape=box style=filled]
-	"Month 3
-兵法と戦略" -> lectures_month_3 [headport=nw style=dashed tailport=s]
-	subgraph cluster_month_3 {
-		lectures_month_3 [label="孫子の兵法
-合戦の戦略と戦術
-指揮官の資質" shape=box]
-	}
-	"Month 4
-文化と教養" [fillcolor=lightblue shape=box style=filled]
-	"Month 4
-文化と教養" -> lectures_month_4 [headport=nw style=dashed tailport=s]
-	subgraph cluster_month_4 {
-		lectures_month_4 [label="茶道の基本
-花道の基本
-書道の基本
-思想的背景の理解" shape=box]
-	}
-	"Month 5
-総合実践" [fillcolor=lightblue shape=box style=filled]
-	"Month 5
-総合実践" -> lectures_month_5 [headport=nw style=dashed tailport=s]
-	subgraph cluster_month_5 {
-		lectures_month_5 [label="合戦シミュレーション
-武士としての生き方" shape=box]
+		node [color=white height=2 style=filled width=2.3529411764705883]
+		color=lightgrey height=0 labeljust=l style=filled width=2.3529411764705883
+		Lectures_Month_1 [label="・プログラミングの基本概念\l・Pythonの基本文法\l" fontname="MS UI Gothic" shape=box width=2.3529411764705883]
 	}
 	"Month 1
-武士の歴史と心構え" -> "Month 2
-武芸の基礎"
+プログラミングの基礎, Pythonの文法" -> Lectures_Month_1 [headport=n style=dashed tailport=s]
 	"Month 2
-武芸の基礎" -> "Month 3
-兵法と戦略"
+データ構造, アルゴリズム" [fillcolor=lightblue fontname="MS UI Gothic" shape=box style=filled width=2.625]
+	subgraph cluster_month_2 {
+		node [color=white height=2 style=filled width=2.3529411764705883]
+		color=lightgrey height=0 labeljust=l style=filled width=2.3529411764705883
+		Lectures_Month_2 [label="・Pythonのデータ構造\l・アルゴリズムの基礎\l" fontname="MS UI Gothic" shape=box width=2.3529411764705883]
+	}
+	"Month 2
+データ構造, アルゴリズム" -> Lectures_Month_2 [headport=n style=dashed tailport=s]
 	"Month 3
-兵法と戦略" -> "Month 4
-文化と教養"
+ライブラリ, フレームワーク" [fillcolor=lightblue fontname="MS UI Gothic" shape=box style=filled width=2.625]
+	subgraph cluster_month_3 {
+		node [color=white height=2 style=filled width=2.3529411764705883]
+		color=lightgrey height=0 labeljust=l style=filled width=2.3529411764705883
+		Lectures_Month_3 [label="・データ分析ライブラリ\l・Webフレームワーク\l・機械学習ライブラリ\l" fontname="MS UI Gothic" shape=box width=2.3529411764705883]
+	}
+	"Month 3
+ライブラリ, フレームワーク" -> Lectures_Month_3 [headport=n style=dashed tailport=s]
 	"Month 4
-文化と教養" -> "Month 5
-総合実践"
+実践的なプロジェクト" [fillcolor=lightblue fontname="MS UI Gothic" shape=box style=filled width=2.625]
+	subgraph cluster_month_4 {
+		node [color=white height=2 style=filled width=2.3529411764705883]
+		color=lightgrey height=0 labeljust=l style=filled width=2.3529411764705883
+		Lectures_Month_4 [label="・Webアプリ開発\l・データ分析プロジェクト\l・コード共有とレビュー\l" fontname="MS UI Gothic" shape=box width=2.3529411764705883]
+	}
+	"Month 4
+実践的なプロジェクト" -> Lectures_Month_4 [headport=n style=dashed tailport=s]
+	"Month 5
+チーム開発, プロフェッショナルスキル" [fillcolor=lightblue fontname="MS UI Gothic" shape=box style=filled width=2.625]
+	subgraph cluster_month_5 {
+		node [color=white height=2 style=filled width=2.3529411764705883]
+		color=lightgrey height=0 labeljust=l style=filled width=2.3529411764705883
+		Lectures_Month_5 [label="・チーム開発\l・ドキュメンテーション\l・テストとコードレビュー\l・キャリアプラン\l" fontname="MS UI Gothic" shape=box width=2.3529411764705883]
+	}
+	"Month 5
+チーム開発, プロフェッショナルスキル" -> Lectures_Month_5 [headport=n style=dashed tailport=s]
+	"Month 1
+プログラミングの基礎, Pythonの文法" -> "Month 2
+データ構造, アルゴリズム"
+	"Month 2
+データ構造, アルゴリズム" -> "Month 3
+ライブラリ, フレームワーク"
+	"Month 3
+ライブラリ, フレームワーク" -> "Month 4
+実践的なプロジェクト"
+	"Month 4
+実践的なプロジェクト" -> "Month 5
+チーム開発, プロフェッショナルスキル"
+	{
+		rank=same
+		"Month 1
+プログラミングの基礎, Pythonの文法"
+		"Month 2
+データ構造, アルゴリズム"
+		"Month 2
+データ構造, アルゴリズム"
+		"Month 3
+ライブラリ, フレームワーク"
+		"Month 3
+ライブラリ, フレームワーク"
+		"Month 4
+実践的なプロジェクト"
+		"Month 4
+実践的なプロジェクト"
+		"Month 5
+チーム開発, プロフェッショナルスキル"
+	}
 }

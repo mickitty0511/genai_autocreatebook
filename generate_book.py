@@ -7,19 +7,51 @@ from tqdm import tqdm
 
 load_dotenv()  # .envファイルから環境変数を読み込む
 
-class LectureGenerator:
-    def __init__(self):
+class BookGenerator:
+    def __init__(self, syllabus_file):
+        self.syllabus_file = syllabus_file
         self.client = anthropic.Anthropic(
-            api_key=os.environ.get("ANTHROPIC_API_KEY")  # 環境変数からAPI keyを取得。os.getenvではなくos.environ.getを使う 🔑
+            api_key=os.environ.get("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得。os.getenvではなくos.environ.getを使う 🔑
         )
 
+    def generate_book(self):
+        with open(self.syllabus_file, "r", encoding="utf-8", errors="ignore") as f:
+            syllabus = yaml.safe_load(f)
+
+        if not os.path.exists("book"):
+            os.makedirs("book")
+
+        for month_data in tqdm(syllabus["curriculum"], desc="Generating book"):
+            month = month_data["month"]
+            topics = month_data["topics"]
+            lectures = month_data["lectures"]
+
+            month_dir = f"book/month_{month}"
+            if not os.path.exists(month_dir):
+                os.makedirs(month_dir)
+
+            for lecture in tqdm(lectures, desc=f"Month {month} lectures", leave=False):
+                lecture_title = lecture["title"]
+                lecture_description = lecture["description"]
+
+                lecture_file = f"{month_dir}/{lecture_title}.md"
+
+                lecture_content = self.generate_lecture_content(lecture_title, lecture_description)
+                quiz_content = self.generate_quiz_content(lecture_title, lecture_description)
+
+                with open(lecture_file, "w", encoding="utf-8", errors="ignore") as f:
+                    f.write(f"# {lecture_title}\n\n")
+                    f.write(lecture_content)
+                    f.write("\n\n")
+                    f.write(quiz_content)
+
     def generate_lecture_content(self, lecture_title, lecture_description):
-        with open("ais/講義資料生成AI.md", "r") as f:
+        with open("ais/lecture_generator.md", "r", encoding="utf-8", errors="ignore") as f:
             lecture_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
 
         response = self.client.messages.create(
             model="claude-3-haiku-20240307",
-            max_tokens=2000,
+            max_tokens=2000, 
             temperature=0.7,
             messages=[
                 {
@@ -36,21 +68,14 @@ class LectureGenerator:
 
         return response.content[0].text.strip()
 
-
-class QuizGenerator:
-    def __init__(self):
-        self.client = anthropic.Anthropic(
-            api_key=os.environ.get("ANTHROPIC_API_KEY")  # 環境変数からAPI keyを取得。os.getenvではなくos.environ.getを使う 🔑
-        )
-
     def generate_quiz_content(self, lecture_title, lecture_description):
-        with open("ais/問題生成AI.md", "r") as f:
+        with open("ais/quiz_generator.md", "r", encoding="utf-8", errors="ignore") as f:
             quiz_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
 
         response = self.client.messages.create(
             model="claude-3-haiku-20240307",
-            max_tokens=2000,
-            temperature=0.7,
+            max_tokens=1000,
+            temperature=0.5,
             messages=[
                 {
                     "role": "user",
@@ -66,50 +91,20 @@ class QuizGenerator:
 
         return response.content[0].text.strip()
 
-
-def main():
-    # aisディレクトリがなければ作成
-    os.makedirs("ais", exist_ok=True)
-
-    # syllabus.yamlを読み込み
-    with open("syllabus.yaml", "r") as f:
-        syllabus = yaml.safe_load(f)
-
-    lecture_generator = LectureGenerator()
-    quiz_generator = QuizGenerator()
-
-    for month_data in tqdm(syllabus, desc="Processing months"):
-        month = month_data["month"]
-        topics = month_data["topics"]
-
-        # 大項目ごとにディレクトリを作成
-        os.makedirs(f"book/{month:02d}", exist_ok=True)
-
-        for topic in tqdm(topics, desc=f"Processing topics for month {month}", leave=False):
-            # 中項目のMarkdownファイルを作成
-            with open(f"book/{month:02d}/{topic}.md", "w") as f:
-                f.write(f"# {topic}\n\n")
-
-            for lecture in tqdm(month_data["lectures"], desc=f"Processing lectures for topic {topic}", leave=False):
-                lecture_title = lecture["title"]
-                lecture_description = lecture["description"]
-
-                # 講義資料を生成
-                lecture_content = lecture_generator.generate_lecture_content(lecture_title, lecture_description)
-
-                # 問題を生成
-                quiz_content = quiz_generator.generate_quiz_content(lecture_title, lecture_description)
-
-                # 中項目のMarkdownファイルに追記
-                with open(f"book/{month:02d}/{topic}.md", "a") as f:
-                    f.write(f"## {lecture_title}\n\n")
-                    f.write(lecture_content)
-                    f.write("\n\n")
-                    f.write(quiz_content)
-                    f.write("\n\n")
-
-    print("Book generation completed.")
-
-
 if __name__ == "__main__":
-    main()
+    if not os.path.exists("ais"):
+        os.makedirs("ais")
+
+    with open("AIdocs/書籍生成AI.md", "r", encoding="utf-8", errors="ignore") as f:
+        requirements = f.read()
+
+    lecture_generator_prompt = requirements.split("## 📝 講義資料生成AI")[1].split("## 📝 問題生成AI")[0].strip()
+    with open("ais/lecture_generator.md", "w", encoding="utf-8", errors="ignore") as f:
+        f.write(lecture_generator_prompt)
+
+    quiz_generator_prompt = requirements.split("## 📝 問題生成AI")[1].strip()
+    with open("ais/quiz_generator.md", "w", encoding="utf-8", errors="ignore") as f:  
+        f.write(quiz_generator_prompt)
+
+    book_generator = BookGenerator("syllabus.yaml")
+    book_generator.generate_book()

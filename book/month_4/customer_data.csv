@@ -1,0 +1,11 @@
+﻿customer_id,age,gender,income,region
+1,35,Male,50000,East
+2,28,,65000,West
+3,42,Male,80000,East
+4,51,Female,90000,West
+5,62,,120000,East
+6,,Female,55000,
+7,45,Male,,East
+8,29,Female,70000,West
+9,53,Male,100000,East
+10,,Female,85000,
