@@ -59,10 +59,16 @@ Lecture Generatorは、講義シリーズの資料を自動生成する便利な
    - シラバスをグラフ化してpngファイルとして保存するスクリプト
 - syllabus_graph.png
    - シラバスをグラフ化した写真ファイル
+   ![シラバスグラフ](syllabus_graph.png)
 - transcript.txt
    - 講義のシラバスとして作成したい内容をまとめたテキスト
 - book/week_*/*md
    - 各週の講義資料
+      - [Week1](book/week_1/)
+      - [Week2](book/week_2/)
+      - [Week3](book/week_3/)
+      - [Week4](book/week_4/)
+      - [Week5](book/week_5/)
 - data/syllabus.yaml
    - 講義のシラバス
 - llms/claude.txt
